@@ -178,7 +178,7 @@ function SetDisplayOfBuildings() {
     }
     else {
         document.getElementById("chad").src = "question mark.jpg";
-        document.getElementById("ChadNameName").innerHTML = "???"
+        document.getElementById("ChadNameName").innerHTML = "???";
         document.getElementById("ChadNameCost").innerHTML = "???";
     }
 
@@ -189,19 +189,19 @@ function SetDisplayOfBuildings() {
     }
     else {
         document.getElementById("tree").src = "question mark.jpg";
-        document.getElementById("TreeNameName").innerHTML = "???"
+        document.getElementById("TreeNameName").innerHTML = "???";
         document.getElementById("TreeNameCost").innerHTML = "???";
     }
 
     if (mineUnlocked) {
         document.getElementById("mine").src = "cum mine.jpg";
-        document.getElementById("mineNameName").innerHTML = "Cum mine";
-        document.getElementById("mineNameCost").innerHTML = "Cum mine";
+        document.getElementById("MineNameName").innerHTML = "Cum mine";
+        document.getElementById("MineNameCost").innerHTML = "Cum mine";
     }
     else {
         document.getElementById("mine").src = "question mark.jpg";
-        document.getElementById("mineNameName").innerHTML = "???"
-        document.getElementById("mineNameCost").innerHTML = "???";
+        document.getElementById("MineNameName").innerHTML = "???";
+        document.getElementById("MineNameCost").innerHTML = "???";
     }
 
 }
