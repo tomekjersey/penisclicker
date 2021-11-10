@@ -33,6 +33,14 @@ var treeCps = 0;
 var treeUnlockRequirement = 1200;
 var treeUnlocked = false;
 
+var mineCount = 0//localStorage.getItem("mineCount");
+var mineBaseCost = 12000;
+var mineCost = mineBaseCost;
+var mineBaseCps = 47;
+var mineCps = 0;
+var mineUnlockRequirement = 12000;
+var mineUnlocked = false;
+
 function doubleUpgrade(unlocked) {
     if (cums >= doubleUpgradeCost) {
         cums -= doubleUpgradeCost;
@@ -95,6 +103,16 @@ function buyTree() {
     }
 }
 
+function buyMine() {
+    if (cums >= mineCost) {
+        cums -= mineCost;
+        mineCount += 1;
+        mineCps += mineBaseCps;
+        mineCost = Math.ceil(mineBaseCost * 1.15 ** mineCount);
+        cumPerSecond += mineCps;
+    }
+}
+
 function wankerUpdate() {
     if (wankerCost > cums)
         document.getElementById("wankerCost").style.color = "red";
@@ -125,6 +143,16 @@ function treeUpdate() {
     //localStorage.setItem("treeCount",treeCount);
 }
 
+function mineUpdate() {
+    if (mineCost > cums)
+        document.getElementById("mineCost").style.color = "red";
+    else
+        document.getElementById("mineCost").style.color = "green";
+    document.getElementById("mineCount").innerHTML = mineCount;
+    document.getElementById("mineCost").innerHTML = mineCost;
+    //localStorage.setItem("mineCount",mineCount);
+}
+
 function CheckForUnlock() {
     if (cums >= wankerUnlockRequirement)
         wankerUnlocked = true;
@@ -132,6 +160,8 @@ function CheckForUnlock() {
         chadUnlocked = true;
     if (cums >= treeUnlockRequirement)
         treeUnlocked = true;
+    if (cums >= mineUnlockRequirement)
+        mineUnlocked = true
 }
 
 function SetDisplayOfBuildings() {
@@ -163,6 +193,17 @@ function SetDisplayOfBuildings() {
         document.getElementById("TreeNameCost").innerHTML = "???";
     }
 
+    if (mineUnlocked) {
+        document.getElementById("mine").src = "cum mine.jpg";
+        document.getElementById("mineNameName").innerHTML = "Cum mine";
+        document.getElementById("mineNameCost").innerHTML = "Cum mine";
+    }
+    else {
+        document.getElementById("mine").src = "question mark.jpg";
+        document.getElementById("mineNameName").innerHTML = "???"
+        document.getElementById("mineNameCost").innerHTML = "???";
+    }
+
 }
 
 function DisplayBuildings() {
@@ -175,6 +216,11 @@ function DisplayBuildings() {
         document.getElementById("Tree Box").style.display = "block"
     else
         document.getElementById("Tree Box").style.display = "none"
+    
+    if (treeUnlocked)
+        document.getElementById("Mine Box").style.display = "block"
+    else
+        document.getElementById("Mine Box").style.display = "none"
 }
 
 function SetTitle() {
@@ -189,10 +235,11 @@ function ResetEverything() {
     localStorage.setItem("wankerCount", 0)
     localStorage.setItem("chadCount", 0)
     localStorage.setItem("treeCount", 0)
+    localStorage.setItem("mineCount", 0)
 }
 
 function updateCps() {
-    cumPerSecond = wankerCps + chadCps + treeCps;
+    cumPerSecond = wankerCps + chadCps + treeCps + mineCps;
 }
 
 function incrementCums() {
@@ -208,6 +255,7 @@ function update() {
     wankerUpdate()
     chadUpdate()
     treeUpdate()
+    mineUpdate()
     CheckForUnlock()
     SetDisplayOfBuildings()
     DisplayBuildings()
